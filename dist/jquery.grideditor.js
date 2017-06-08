@@ -60,7 +60,7 @@ $.fn.gridEditor = function( options ) {
             addRowGroup,
             htmlTextArea
         ;
-        var colClasses = ['col-md-', 'col-sm-', 'col-xs-'];
+        var colClasses = ['m', 'l', 's'];
         var curColClassIndex = 0; // Index of the column class we are manipulating currently
         var MAX_COL_SIZE = 12;
         
@@ -79,8 +79,8 @@ $.fn.gridEditor = function( options ) {
         // Wrap content if it is non-bootstrap
         if (baseElem.children().length && !baseElem.find('div.row').length) {
             var children = baseElem.children();
-            var newRow = $('<div class="row"><div class="col-md-12"/></div>').appendTo(baseElem);
-            newRow.find('.col-md-12').append(children);
+            var newRow = $('<div class="row"><div class="col m12"/></div>').appendTo(baseElem);
+            newRow.find('.col.m12').append(children);
         }
 
         setup();
@@ -118,7 +118,7 @@ $.fn.gridEditor = function( options ) {
                 var layoutName = layout.join(' - ');
                 var icon = '<div class="row ge-row-icon">';
                 layout.forEach(function(i) {
-                    icon += '<div class="column col-xs-' + i + '"/>';
+                    icon += '<div class="column col s' + i + '"/>';
                 });
                 icon += '</div>';
                 btn.append(icon);
@@ -378,7 +378,7 @@ $.fn.gridEditor = function( options ) {
         }
 
         function addAllColClasses() {
-            canvas.find('.column, div[class*="col-"]').each(function() {
+            canvas.find('.column, div[class*="col"]').each(function() {
                 var col = $(this);
 
                 var size = 2;
@@ -395,6 +395,7 @@ $.fn.gridEditor = function( options ) {
                 });
 
                 col.addClass('column');
+                col.addClass('col');
             });
         }
 
@@ -472,6 +473,7 @@ $.fn.gridEditor = function( options ) {
         function createColumn(size) {
             return $('<div/>')
                 .addClass(colClasses.map(function(c) { return c + size; }).join(' '))
+                .addClass('col')
                 .append(createDefaultContentWrapper().html(
                     getRTE(settings.content_types[0]).initialContent)
                 )
